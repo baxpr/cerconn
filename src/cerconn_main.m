@@ -92,3 +92,5 @@ connmap(data_removegm,removegm_niigz,out_dir,'removegm')
 connmap(data_keepgm,keepgm_niigz,out_dir,'keepgm')
 
 
+% Create eroded ROIs
+
