@@ -25,7 +25,8 @@ Yseg(isnan(Yseg(:))) = 0;
 Vout = Vmeanfmri;
 Vout.dt(1) = spm_type('uint16');
 Vout.pinfo(1:2) = [1 0];
-roi_nii = fullfile(out_dir,'rcerseg_masked.nii');
+[~,name] = fileparts(fcerseg_nii);
+roi_nii = fullfile(out_dir,[name '_masked.nii']);
 Vout.fname = roi_nii;
 spm_write_vol(Vout,Yseg);
 
@@ -54,11 +55,11 @@ end
 Vout = Vroi;
 Vout.pinfo(1:2) = [1 0];
 Vout.dt(1) = spm_type('uint16');
-ecerseg_nii = fullfile(out_dir,'cerseg_eroded.nii');
+ecerseg_nii = fullfile(out_dir,[name '_eroded.nii']);
 Vout.fname = ecerseg_nii;
 spm_write_vol(Vout,Yim);
 
-% Resample cerseg ROIs to fMRI geometry and apply fmri mask
+% Resample eroded cerseg ROIs to fMRI geometry and apply fmri mask
 fecerseg_nii = resample_roi(ecerseg_nii,meanfmri_nii);
 Vseg = spm_vol(fecerseg_nii);
 Yseg = spm_read_vols(Vseg);
@@ -68,8 +69,8 @@ Yseg(isnan(Yseg(:))) = 0;
 Vout = Vmeanfmri;
 Vout.dt(1) = spm_type('uint16');
 Vout.pinfo(1:2) = [1 0];
-eroi_nii = fullfile(out_dir,'rcerseg_masked_eroded.nii');
-Vout.fname = roi_nii;
+eroi_nii = fullfile(out_dir,[name '_masked_eroded.nii']);
+Vout.fname = eroi_nii;
 spm_write_vol(Vout,Yseg);
 
 % Check that all ROIs are present after masking
