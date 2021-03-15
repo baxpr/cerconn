@@ -59,7 +59,8 @@ Yseg(isnan(Yseg(:))) = 0;
 Vout = Vmeanfmri;
 Vout.dt(1) = spm_type('uint16');
 Vout.pinfo(1:2) = [1 0];
-Vout.fname = fullfile(out_dir,'rcerseg_masked.nii');
+roi_nii = fullfile(out_dir,'rcerseg_masked.nii');
+Vout.fname = roi_nii;
 spm_write_vol(Vout,Yseg);
 
 % Check that all ROIs are present after masking
@@ -67,6 +68,5 @@ if ~isequal( unique(Yseg(:)), expected_rois )
 	error('Missing an ROI after masking')
 end
 
-
-	
-	
+% Get ROI time series
+data = extract_roi_timeseries(removegm_niigz,roi_nii);
