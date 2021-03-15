@@ -75,7 +75,8 @@ if ~isequal( unique(Yseg(:)), expected_rois )
 end
 
 
-% Get ROI time series. Save labels to file (labels the same for both)
+% Get ROI time series. Save labels to file (labels the same for both
+% because same ROI image used)
 [data_removegm,vals] = extract_roi_timeseries(removegm_niigz,roi_nii);
 data_keepgm = extract_roi_timeseries(keepgm_niigz,roi_nii);
 csvwrite(fullfile(out_dir,'fmrimask-labels.csv'), vals)
