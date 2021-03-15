@@ -22,6 +22,7 @@ meanfmri_niigz = '../INPUTS/meanadfmri.nii.gz';
 
 %% Processing
 
+
 % Copy inputs
 copyfile(cerseg_niigz,fullfile(out_dir,'cerseg.nii.gz'));
 cerseg_niigz = fullfile(out_dir,'cerseg.nii.gz');
@@ -33,12 +34,15 @@ meanfmri_niigz = fullfile(out_dir,'meanfmri.nii.gz');
 gunzip(meanfmri_niigz);
 meanfmri_nii = strrep(meanfmri_niigz,'.gz','');
 
+
 % Resample cerseg ROIs to fMRI geometry
 fcerseg_nii = resample_roi(cerseg_nii,meanfmri_nii);
+
 
 % Load cerseg ROIs (we already have combined hemispheres)
 Vseg = spm_vol(fcerseg_nii);
 Yseg = spm_read_vols(Vseg);
+
 
 % Create mask of voxels with significant signal in the fMRI
 Vmeanfmri = spm_vol(meanfmri_nii);
@@ -70,6 +74,7 @@ if ~isequal( unique(Yseg(:)), expected_rois )
 	error('Missing an ROI after masking')
 end
 
+
 % Get ROI time series. Save labels to file (labels the same for both)
 [data_removegm,vals] = extract_roi_timeseries(removegm_niigz,roi_nii);
 data_keepgm = extract_roi_timeseries(keepgm_niigz,roi_nii);
@@ -79,6 +84,7 @@ csvwrite(fullfile(out_dir,'fmrimask-labels.csv'), vals)
 % Connectivity matrices
 connmat(data_removegm,out_dir,'removegm');
 connmat(data_keepgm,out_dir,'keepgm');
+
 
 % Connectivity maps
 connmap(data_removegm,removegm_niigz,out_dir,'removegm')
