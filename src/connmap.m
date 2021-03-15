@@ -1,5 +1,8 @@
 function connmap(data,fmri_nii,out_dir,tag)
 
+out_dir = [out_dir filesep 'CONNMAP_' upper(tag)];
+mkdir(out_dir);
+
 Vfmri = spm_vol(fmri_nii);
 Yfmri = spm_read_vols(Vfmri);
 osize = size(Yfmri);

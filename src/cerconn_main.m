@@ -19,6 +19,13 @@ keepgm_niigz = '../INPUTS/filtered_keepgm_noscrub_nadfmri.nii.gz';
 % From connprep MEAN_FMRI_NATIVE
 meanfmri_niigz = '../INPUTS/meanadfmri.nii.gz';
 
+% From cat12
+fwddef_niigz = '../INPUTS/y_fwddef.nii.gz';
+
+% Reference image
+%refimg_nii = 'tpm/mask_ICV.nii';
+refimg_nii = [spm('dir') 'tpm' filesep 'mask_ICV.nii'];
+
 
 %% Processing
 
@@ -33,6 +40,11 @@ copyfile(meanfmri_niigz,fullfile(out_dir,'meanfmri.nii.gz'));
 meanfmri_niigz = fullfile(out_dir,'meanfmri.nii.gz');
 gunzip(meanfmri_niigz);
 meanfmri_nii = strrep(meanfmri_niigz,'.gz','');
+
+copyfile(fwddef_niigz,fullfile(out_dir,'y_fwddef.nii.gz'));
+fwddef_niigz = fullfile(out_dir,'y_fwddef.nii.gz');
+gunzip(fwddef_niigz);
+fwddef_nii = strrep(fwddef_niigz,'.gz','');
 
 
 % Create ROI images in fMRI geometry
@@ -54,9 +66,17 @@ connmat(data_keepgm,out_dir,'keepgm');
 connmat(edata_removegm,out_dir,'eremovegm');
 connmat(edata_keepgm,out_dir,'ekeepgm');
 
+
 % Connectivity maps
 connmap(data_removegm,removegm_niigz,out_dir,'removegm')
 connmap(data_keepgm,keepgm_niigz,out_dir,'keepgm')
 connmap(edata_removegm,removegm_niigz,out_dir,'eremovegm')
 connmap(edata_keepgm,keepgm_niigz,out_dir,'ekeepgm')
+
+
+% Warp to MNI
+warp_images_dir([out_dir filesep 'CONNMAP_REMOVEGM']);
+warp_images_dir([out_dir filesep 'CONNMAP_KEEPGM']);
+warp_images_dir([out_dir filesep 'CONNMAP_EREMOVEGM']);
+warp_images_dir([out_dir filesep 'CONNMAP_EKEEPGM']);
 
