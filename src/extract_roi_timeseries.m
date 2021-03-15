@@ -1,4 +1,4 @@
-function data = extract_roi_timeseries(fmri_nii,roi_nii)
+function [data,vals] = extract_roi_timeseries(fmri_nii,roi_nii)
 
 Vroi = spm_vol(roi_nii);
 Vfmri = spm_vol(fmri_nii);

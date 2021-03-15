@@ -14,7 +14,7 @@ expected_rois = (0:7)';
 
 % From connprep FILTERED_REMOVEGM_NATIVE, FILTERED_KEEPGM_NATIVE
 removegm_niigz = '../INPUTS/filtered_removegm_noscrub_nadfmri.nii.gz';
-keepgm_niigz = '../INPUTS/filtered_keep_noscrub_nadfmri.nii.gz';
+keepgm_niigz = '../INPUTS/filtered_keepgm_noscrub_nadfmri.nii.gz';
 
 % From connprep MEAN_FMRI_NATIVE
 meanfmri_niigz = '../INPUTS/meanadfmri.nii.gz';
@@ -53,6 +53,7 @@ Vout.pinfo(1:2) = [1 0];
 Vout.fname = fullfile(out_dir,'fmrimask.nii');
 spm_write_vol(Vout,Yfmrimask);
 
+
 % Apply mask to ROIs
 Yseg(Yfmrimask(:)==0) = 0;
 Yseg(isnan(Yseg(:))) = 0;
@@ -63,10 +64,24 @@ roi_nii = fullfile(out_dir,'rcerseg_masked.nii');
 Vout.fname = roi_nii;
 spm_write_vol(Vout,Yseg);
 
+
 % Check that all ROIs are present after masking
 if ~isequal( unique(Yseg(:)), expected_rois )
 	error('Missing an ROI after masking')
 end
 
-% Get ROI time series
-data = extract_roi_timeseries(removegm_niigz,roi_nii);
+% Get ROI time series. Save labels to file (labels the same for both)
+[data_removegm,vals] = extract_roi_timeseries(removegm_niigz,roi_nii);
+data_keepgm = extract_roi_timeseries(keepgm_niigz,roi_nii);
+csvwrite(fullfile(out_dir,'fmrimask-labels.csv'), vals)
+
+
+% Connectivity matrices
+connmat(data_removegm,out_dir,'removegm');
+connmat(data_keepgm,out_dir,'keepgm');
+
+% Connectivity maps
+connmap(data_removegm,removegm_niigz,out_dir,'removegm')
+connmap(data_keepgm,keepgm_niigz,out_dir,'keepgm')
+
+
