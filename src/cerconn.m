@@ -35,6 +35,15 @@ addOptional(P,'fwhm','4');
 % Output directory
 addOptional(P,'out_dir','../OUTPUTS');
 
+% FSL
+addOptional(P,'fsl_dir','/usr/local/fsl');
+
+% ImageMagick
+addOptional(P,'magick_dir','/usr/bin');
+
+% Source location
+addOptional(P,'src_dir','/opt/cerconn/src');
+
 % Parse
 parse(P,varargin{:});
 

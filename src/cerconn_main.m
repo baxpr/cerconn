@@ -86,6 +86,22 @@ smooth_images_dir([out_dir filesep 'CONNMAP_EKEEPGM_MNI'],fwhm, ...
 	[out_dir filesep 'SCONNMAP_EKEEPGM_MNI'])
 
 
+% PDF
+system([ ...
+	' OUTDIR=' out_dir
+	' WCERSEG=' inp.wcerseg_niigz
+	' WMEANFMRI=' inp.wmeanfmri_niigz
+	' WMT1=' inp.wmt1
+	' PROJECT=' inp.project
+	' SUBJECT=' inp.subject
+	' SESSION=' inp.session
+	' SCAN=' inp.scan
+	' MAGICKDIR=' inp.magick_dir
+	' FSLDIR=' inp.fsl_dir
+	inp.src_dir '/make_pdf.sh'
+	]);
+
+
 % Arrange outputs
 mkdir([out_dir filesep 'FMRIMASK'])
 gzip(fmrimask_nii)
@@ -98,7 +114,5 @@ movefile([roi_nii '.gz'],[out_dir filesep 'ROIS']);
 movefile([eroi_nii '.gz'],[out_dir filesep 'ROIS']);
 movefile([out_dir filesep 'roi-labels.csv'],[out_dir filesep 'ROIS']);
 
-
-% PDF
-% OUTDIR= WCERSEG= WMEANFMRI= WMT1= PROJECT= SUBJECT= SESSION= SCAN= FSLDIR=
+	
 
