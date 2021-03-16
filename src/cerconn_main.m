@@ -1,5 +1,8 @@
 function cerconn_main(inp)
 
+
+%% Setup
+
 % Shortcuts
 out_dir = inp.out_dir;
 fwhm = str2double(inp.fwhm);
