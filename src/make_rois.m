@@ -1,4 +1,5 @@
-function [roi_nii,eroi_nii] = make_rois(meanfmri_nii,cerseg_nii,expected_rois,out_dir)
+function [roi_nii,eroi_nii,fmrimask_nii] = make_rois( ...
+	meanfmri_nii,cerseg_nii,expected_rois,out_dir)
 
 
 %% Create mask of voxels with significant signal in the fMRI
@@ -11,7 +12,8 @@ Yfmrimask = Ymeanfmri> thresh;
 Vout = Vmeanfmri;
 Vout.dt(1) = spm_type('uint16');
 Vout.pinfo(1:2) = [1 0];
-Vout.fname = fullfile(out_dir,'fmrimask.nii');
+fmrimask_nii = fullfile(out_dir,'fmrimask.nii')
+Vout.fname = fmrimask_nii;
 spm_write_vol(Vout,Yfmrimask);
 
 

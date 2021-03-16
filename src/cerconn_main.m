@@ -32,7 +32,8 @@ fwddef_nii = strrep(fwddef_niigz,'.gz','');
 
 
 % Create ROI images in fMRI geometry
-[roi_nii,eroi_nii] = make_rois(meanfmri_nii,cerseg_nii,expected_rois,out_dir);
+[roi_nii,eroi_nii,fmrimask_nii] = make_rois( ...
+	meanfmri_nii,cerseg_nii,expected_rois,out_dir);
 
 
 % Get ROI time series. Save labels to file (labels the same for both
