@@ -35,6 +35,12 @@ addOptional(P,'fwhm','4');
 % Output directory
 addOptional(P,'out_dir','../OUTPUTS');
 
+% Subject info if on XNAT
+addOptional(P,'project','UNK_PROJ');
+addOptional(P,'subject','UNK_SUBJ');
+addOptional(P,'session','UNK_SESS');
+addOptional(P,'scan','UNK_SCAN');
+
 % FSL
 addOptional(P,'fsl_dir','/usr/local/fsl');
 
