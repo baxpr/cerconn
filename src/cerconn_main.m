@@ -99,4 +99,6 @@ movefile([eroi_nii '.gz'],[out_dir filesep 'ROIS']);
 movefile([out_dir filesep 'roi-labels.csv'],[out_dir filesep 'ROIS']);
 
 
+% PDF
+% OUTDIR= WCERSEG= WMEANFMRI= WMT1= PROJECT= SUBJECT= SESSION= SCAN= FSLDIR=
 
