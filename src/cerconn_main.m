@@ -114,5 +114,7 @@ movefile([roi_nii '.gz'],[out_dir filesep 'ROIS']);
 movefile([eroi_nii '.gz'],[out_dir filesep 'ROIS']);
 movefile([out_dir filesep 'roi-labels.csv'],[out_dir filesep 'ROIS']);
 
-	
+system(['gzip ' out_dir '/*.nii'])
+system(['gzip ' out_dir '/*/*.nii'])
+
 
