@@ -85,3 +85,17 @@ smooth_images_dir([out_dir filesep 'CONNMAP_EKEEPGM_MNI'],fwhm, ...
 	[out_dir filesep 'SCONNMAP_EKEEPGM_MNI'])
 
 
+% Arrange outputs
+mkdir([out_dir filesep 'FMRIMASK'])
+gzip(fmrimask_nii)
+movefile([fmrimask_nii '.gz'],[out_dir filesep 'FMRIMASK']);
+
+mkdir([out_dir filesep 'ROIS'])
+gzip(roi_nii)
+gzip(eroi_nii)
+movefile([roi_nii '.gz'],[out_dir filesep 'ROIS']);
+movefile([eroi_nii '.gz'],[out_dir filesep 'ROIS']);
+movefile([out_dir filesep 'roi-labels.csv'],[out_dir filesep 'ROIS']);
+
+
+
