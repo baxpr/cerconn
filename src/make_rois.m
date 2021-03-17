@@ -12,7 +12,7 @@ Yfmrimask = Ymeanfmri> thresh;
 Vout = Vmeanfmri;
 Vout.dt(1) = spm_type('uint16');
 Vout.pinfo(1:2) = [1 0];
-fmrimask_nii = fullfile(out_dir,'fmrimask.nii')
+fmrimask_nii = fullfile(out_dir,'fmrimask.nii');
 Vout.fname = fmrimask_nii;
 spm_write_vol(Vout,Yfmrimask);
 

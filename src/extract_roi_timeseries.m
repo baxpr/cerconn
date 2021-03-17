@@ -2,7 +2,8 @@ function [data,vals] = extract_roi_timeseries(fmri_nii,roi_nii)
 
 Vroi = spm_vol(roi_nii);
 Vfmri = spm_vol(fmri_nii);
-spm_check_orientations([Vroi; rmfield(Vfmri,'dat')]);
+%spm_check_orientations([Vroi; rmfield(Vfmri,'dat')]);
+spm_check_orientations([Vroi; Vfmri]);
 
 Yroi = spm_read_vols(Vroi);
 Yfmri = spm_read_vols(Vfmri);

@@ -13,22 +13,9 @@ expected_rois = (0:7)';
 
 %% Processing
 
-
 % Copy inputs
-copyfile(inp.cerseg_niigz,fullfile(out_dir,'cerseg.nii.gz'));
-cerseg_niigz = fullfile(out_dir,'cerseg.nii.gz');
-gunzip(cerseg_niigz);
-cerseg_nii = strrep(cerseg_niigz,'.gz','');
-
-copyfile(inp.meanfmri_niigz,fullfile(out_dir,'meanfmri.nii.gz'));
-meanfmri_niigz = fullfile(out_dir,'meanfmri.nii.gz');
-gunzip(meanfmri_niigz);
-meanfmri_nii = strrep(meanfmri_niigz,'.gz','');
-
-copyfile(inp.fwddef_niigz,fullfile(out_dir,'y_fwddef.nii.gz'));
-fwddef_niigz = fullfile(out_dir,'y_fwddef.nii.gz');
-gunzip(fwddef_niigz);
-fwddef_nii = strrep(fwddef_niigz,'.gz','');
+[cerseg_nii,wcerseg_nii,removegm_nii,keepgm_nii, ...
+	meanfmri_nii,wmeanfmri_nii,fwddef_nii] = prep_files(inp);
 
 
 % Create ROI images in fMRI geometry
@@ -39,10 +26,10 @@ fwddef_nii = strrep(fwddef_niigz,'.gz','');
 % Get ROI time series. Save labels to file (labels the same for both
 % because same ROI image used)
 disp('Extract ROI time series')
-[data_removegm,vals] = extract_roi_timeseries(inp.removegm_niigz,roi_nii);
-data_keepgm = extract_roi_timeseries(inp.keepgm_niigz,roi_nii);
-edata_removegm = extract_roi_timeseries(inp.removegm_niigz,eroi_nii);
-edata_keepgm = extract_roi_timeseries(inp.keepgm_niigz,eroi_nii);
+[data_removegm,vals] = extract_roi_timeseries(removegm_nii,roi_nii);
+data_keepgm = extract_roi_timeseries(keepgm_nii,roi_nii);
+edata_removegm = extract_roi_timeseries(removegm_nii,eroi_nii);
+edata_keepgm = extract_roi_timeseries(keepgm_nii,eroi_nii);
 csvwrite(fullfile(out_dir,'roi-labels.csv'), vals)
 
 
@@ -56,10 +43,10 @@ connmat(edata_keepgm,out_dir,'ekeepgm');
 
 % Connectivity maps
 disp('Connectivity maps')
-connmap(data_removegm,inp.removegm_niigz,out_dir,'removegm')
-connmap(data_keepgm,inp.keepgm_niigz,out_dir,'keepgm')
-connmap(edata_removegm,inp.removegm_niigz,out_dir,'eremovegm')
-connmap(edata_keepgm,inp.keepgm_niigz,out_dir,'ekeepgm')
+connmap(data_removegm,removegm_nii,out_dir,'removegm')
+connmap(data_keepgm,keepgm_nii,out_dir,'keepgm')
+connmap(edata_removegm,removegm_nii,out_dir,'eremovegm')
+connmap(edata_keepgm,keepgm_nii,out_dir,'ekeepgm')
 
 
 % Warp to MNI
@@ -114,7 +101,7 @@ movefile([roi_nii '.gz'],[out_dir filesep 'ROIS']);
 movefile([eroi_nii '.gz'],[out_dir filesep 'ROIS']);
 movefile([out_dir filesep 'roi-labels.csv'],[out_dir filesep 'ROIS']);
 
-system(['gzip ' out_dir '/*.nii'])
-system(['gzip ' out_dir '/*/*.nii'])
+system(['gzip -f ' out_dir '/*.nii']);
+system(['gzip -f ' out_dir '/*/*.nii']);
 
 

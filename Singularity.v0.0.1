@@ -24,8 +24,8 @@ From: ubuntu:20.04
 
 %post
   apt-get update
-  apt-get install -y wget unzip zip xvfb ghostscript imagemagick bc   # Misc tools
-  apt-get install -y openjdk-8-jre                                    # Matlab
+  apt-get install -y wget unzip zip gzip xvfb ghostscript imagemagick bc   # Misc tools
+  apt-get install -y openjdk-8-jre                                         # Matlab
   
   # Fix imagemagick policy to allow PDF output. See https://usn.ubuntu.com/3785-1/
   sed -i 's/rights="none" pattern="PDF"/rights="read | write" pattern="PDF"/' \
