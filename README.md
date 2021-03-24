@@ -48,3 +48,25 @@ correlation with respect to the other seed regions are computed.
 
 ## Outputs
 
+    ROIS      Seed ROI images in native fMRI geometry (eroded and non-eroded) and list of ROI labels
+    
+    FMRIMASK  Native fMRI space mask used to exclude voxels without fMRI signal from seeds
+    
+    CONNMAP   Connectivity maps for the seed ROIs. There are a number of different types:
+    
+           R_*        Pearson correlation
+           Z_*        Fisher Z transform of Pearson correlation
+           pR_*       Partial correlation conditioning on the the other seeds
+           pZ_*       Fisher transform of the partial correlation
+      
+           *E*        Indicates eroded seed ROIs (no E indicates uneroded ROIs)
+              
+           REMOVEGM   Mean gray matter removed during preprocessing
+           KEEPGM     Mean gray matter retained during preprocessing
+      
+           _MNI       Indicates MNI space images (no _MNI indicates native space)
+    
+    SCONNMAP  Smoothed connectivity maps. As above.
+    
+    CONNMAT   Connectivity matrices for seed ROIs. As above.
+
