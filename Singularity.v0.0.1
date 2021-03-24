@@ -23,9 +23,9 @@ From: ubuntu:20.04
 
 
 %post
-  apt-get update
-  apt-get install -y wget unzip zip gzip xvfb ghostscript imagemagick bc   # Misc tools
-  apt-get install -y openjdk-8-jre                                         # Matlab
+  apt-get update > /dev/null 2>&1
+  apt-get install -y wget unzip zip gzip xvfb ghostscript imagemagick bc  > /dev/null 2>&1  # Misc tools
+  apt-get install -y openjdk-8-jre                                        > /dev/null 2>&1  # Matlab
   
   # Fix imagemagick policy to allow PDF output. See https://usn.ubuntu.com/3785-1/
   sed -i 's/rights="none" pattern="PDF"/rights="read | write" pattern="PDF"/' \
@@ -41,13 +41,13 @@ From: ubuntu:20.04
           libxinerama1 libfreetype6 libxft2 libxrandr2 libmng2 \
           libgtk2.0-0 libpulse0 libasound2 libcaca0 libopenblas-base \
 		  language-pack-en bzip2 dc bc \
-		  > /dev/null
+		   > /dev/null 2>&1
 		  
   # Download the Matlab Compiled Runtime installer, install, clean up
   mkdir /MCR
   wget -nv -P /MCR https://ssd.mathworks.com/supportfiles/downloads/R2019b/Release/6/deployment_files/installer/complete/glnxa64/MATLAB_Runtime_R2019b_Update_6_glnxa64.zip
-  unzip /MCR/MATLAB_Runtime_R2019b_Update_6_glnxa64.zip -d /MCR/MATLAB_Runtime_R2019b_Update_6_glnxa64
-  /MCR/MATLAB_Runtime_R2019b_Update_6_glnxa64/install -mode silent -agreeToLicense yes
+  unzip -qq /MCR/MATLAB_Runtime_R2019b_Update_6_glnxa64.zip -d /MCR/MATLAB_Runtime_R2019b_Update_6_glnxa64
+  /MCR/MATLAB_Runtime_R2019b_Update_6_glnxa64/install -mode silent -agreeToLicense yes > /dev/null 2>&1
   rm -r /MCR/MATLAB_Runtime_R2019b_Update_6_glnxa64 /MCR/MATLAB_Runtime_R2019b_Update_6_glnxa64.zip
   rmdir /MCR
 
