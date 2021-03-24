@@ -50,6 +50,8 @@ correlation with respect to the other seed regions are computed.
 
     ROIS      Seed ROI images in native fMRI geometry (eroded and non-eroded) and list of ROI labels
     
+    EROIS     Eroded seed ROI images in native T1 geometry
+    
     FMRIMASK  Native fMRI space mask used to exclude voxels without fMRI signal from seeds
     
     CONNMAP   Connectivity maps for the seed ROIs. There are a number of different types:

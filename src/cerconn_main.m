@@ -19,7 +19,7 @@ expected_rois = (0:7)';
 
 
 % Create ROI images in fMRI geometry
-[roi_nii,eroi_nii,fmrimask_nii] = make_rois( ...
+[roi_nii,eroi_nii,fmrimask_nii,ecerseg_nii] = make_rois( ...
 	meanfmri_nii,cerseg_nii,expected_rois,out_dir);
 
 
@@ -100,6 +100,10 @@ gzip(eroi_nii)
 movefile([roi_nii '.gz'],[out_dir filesep 'ROIS']);
 movefile([eroi_nii '.gz'],[out_dir filesep 'ROIS']);
 movefile([out_dir filesep 'roi-labels.csv'],[out_dir filesep 'ROIS']);
+
+mkdir([out_dir filesep 'EROIS'])
+gzip(ecerseg_nii)
+movefile([ecerseg_nii '.gz'],[out_dir filesep 'EROIS']);
 
 system(['gzip -f ' out_dir '/*.nii']);
 system(['gzip -f ' out_dir '/*/*.nii']);
