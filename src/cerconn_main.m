@@ -85,11 +85,12 @@ system([ ...
 	' SCAN=' inp.scan ...
 	' MAGICKDIR=' inp.magick_dir ...
 	' FSLDIR=' inp.fsl_dir ...
-	inp.src_dir '/make_pdf.sh'
+	' ' inp.src_dir '/make_pdf.sh'
 	]);
 
 
 % Arrange outputs
+disp('Organizing outputs')
 mkdir([out_dir filesep 'FMRIMASK'])
 gzip(fmrimask_nii)
 movefile([fmrimask_nii '.gz'],[out_dir filesep 'FMRIMASK']);
@@ -108,4 +109,9 @@ movefile([ecerseg_nii '.gz'],[out_dir filesep 'EROIS']);
 system(['gzip -f ' out_dir '/*.nii']);
 system(['gzip -f ' out_dir '/*/*.nii']);
 
+
+% Wrap up
+if isdeployed
+	exit
+end
 
