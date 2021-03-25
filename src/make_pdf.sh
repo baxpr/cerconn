@@ -16,8 +16,8 @@ for slice in -85 -75 -65 -55 -45 -35 ; do
 	fsleyes render -of cor_${slice}.png \
 		--scene ortho --worldLoc 0 ${slice} -35 --displaySpace world --size 600 600 --yzoom 1000 \
 		--layout horizontal --hideCursor --hideLabels --hidex --hidez \
-		${WMEANFMRI} --overlayType volume \
-		${WCERSEG} --overlayType label --lut random --outline --outlineWidth 3
+		${wmeanfmri_niigz} --overlayType volume \
+		${wcerseg_niigz} --overlayType label --lut random --outline --outlineWidth 3
 done
 
 # ROI views on T1
@@ -25,8 +25,8 @@ for slice in -85 -75 -65 -55 -45 -35 ; do
 	fsleyes render -of cort1_${slice}.png \
 		--scene ortho --worldLoc 0 ${slice} -35 --displaySpace world --size 600 600 --yzoom 1000 \
 		--layout horizontal --hideCursor --hideLabels --hidex --hidez \
-		${WMT1} --overlayType volume \
-		${WCERSEG} --overlayType label --lut random --outline --outlineWidth 3
+		${wmt1_niigz} --overlayType volume \
+		${wcerseg_niigz} --overlayType label --lut random --outline --outlineWidth 3
 done
 
 
@@ -36,7 +36,7 @@ for roi in 001 002 003 004 005 006 007 ; do
 		fsleyes render -of ax_${roi}_${slice}.png \
 			--scene ortho --worldLoc 0 0 ${slice} --displaySpace world --size 600 600 \
 			--layout horizontal --hideCursor --hideLabels --hidex --hidey \
-			${WMT1} --overlayType volume \
+			${wmt1_niigz} --overlayType volume \
 			SCONNMAP_REMOVEGM_MNI/swZ_removegm_${roi} --overlayType volume --displayRange 3 10 \
 			--useNegativeCmap --cmap red-yellow --negativeCmap blue-lightblue
 	done

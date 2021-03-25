@@ -98,11 +98,7 @@ echo ${thedate}
 	src_dir "${src_dir}"
 
 # PDF and outputs org. PDF not run from within matlab due to fsleyes xvfb issues
-WMEANFMRI="${wmeanfmri_niigz}" \
-WCERSEG="${wcerseg_niigz}" \
-WMT1="${wmt1_niigz}" \
 make_pdf.sh
-
 organize_outputs.sh
 
 
