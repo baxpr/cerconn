@@ -73,43 +73,6 @@ smooth_images_dir([out_dir filesep 'CONNMAP_EKEEPGM_MNI'],fwhm, ...
 	[out_dir filesep 'SCONNMAP_EKEEPGM_MNI'])
 
 
-% PDF
-system([ ...
-	' OUTDIR=' out_dir ...
-	' WCERSEG=' inp.wcerseg_niigz ...
-	' WMEANFMRI=' inp.wmeanfmri_niigz ...
-	' WMT1=' inp.wmt1_niigz ...
-	' PROJECT=' inp.project ...
-	' SUBJECT=' inp.subject ...
-	' SESSION=' inp.session ...
-	' SCAN=' inp.scan ...
-	' MAGICKDIR=' inp.magick_dir ...
-	' FSLDIR=' inp.fsl_dir ...
-	' ' inp.src_dir '/make_pdf.sh'
-	]);
-
-
-% Arrange outputs
-disp('Organizing outputs')
-mkdir([out_dir filesep 'FMRIMASK'])
-gzip(fmrimask_nii)
-movefile([fmrimask_nii '.gz'],[out_dir filesep 'FMRIMASK']);
-
-mkdir([out_dir filesep 'ROIS'])
-gzip(roi_nii)
-gzip(eroi_nii)
-movefile([roi_nii '.gz'],[out_dir filesep 'ROIS']);
-movefile([eroi_nii '.gz'],[out_dir filesep 'ROIS']);
-movefile([out_dir filesep 'roi-labels.csv'],[out_dir filesep 'ROIS']);
-
-mkdir([out_dir filesep 'EROIS'])
-gzip(ecerseg_nii)
-movefile([ecerseg_nii '.gz'],[out_dir filesep 'EROIS']);
-
-system(['gzip -f ' out_dir '/*.nii']);
-system(['gzip -f ' out_dir '/*/*.nii']);
-
-
 % Wrap up
 if isdeployed
 	exit

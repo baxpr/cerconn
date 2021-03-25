@@ -7,7 +7,7 @@ PATH=${FSLDIR}/bin:${PATH}
 . ${FSLDIR}/etc/fslconf/fsl.sh
 
 # Work in output directory
-cd ${OUTDIR}
+cd ${out_dir}
 
 thedate=$(date)
 
@@ -44,25 +44,25 @@ done
 
 
 # Combine
-${MAGICKDIR}/montage \
+${magick_dir}/montage \
 	-mode concatenate cor_*.png \
 	-tile 2x -trim -quality 100 -background black -gravity center \
 	-border 20 -bordercolor black page_cor.png
 
-${MAGICKDIR}/montage \
+${magick_dir}/montage \
 	-mode concatenate cort1_*.png \
 	-tile 2x -trim -quality 100 -background black -gravity center \
 	-border 20 -bordercolor black page_cort1.png
 
 for roi in 001 002 003 004 005 006 007 ; do
-	${MAGICKDIR}/montage \
+	${magick_dir}/montage \
 		-mode concatenate ax_${roi}*.png \
 		-tile 2x -trim -quality 100 -background black -gravity center \
 		-border 20 -bordercolor black page_${roi}.png
 done
 
-info_string="$PROJECT $SUBJECT $SESSION $SCAN"
-${MAGICKDIR}/convert -size 2600x3365 xc:white \
+info_string="$project $subject $session $scan"
+${magick_dir}/convert -size 2600x3365 xc:white \
 	-gravity center \( page_cor.png -resize 2400x \) -composite \
 	-gravity North -pointsize 48 -annotate +0+100 \
 	"Cerebellar segmentation (Buckner7) over mean fMRI" \
@@ -70,7 +70,7 @@ ${MAGICKDIR}/convert -size 2600x3365 xc:white \
 	-gravity NorthWest -pointsize 48 -annotate +100+200 "${info_string}" \
 	page_cor.png
 
-${MAGICKDIR}/convert -size 2600x3365 xc:white \
+${magick_dir}/convert -size 2600x3365 xc:white \
 	-gravity center \( page_cort1.png -resize 2400x \) -composite \
 	-gravity North -pointsize 48 -annotate +0+100 \
 	"Cerebellar segmentation (Buckner7) over mean fMRI" \
@@ -79,7 +79,7 @@ ${MAGICKDIR}/convert -size 2600x3365 xc:white \
 	page_cort1.png
 
 for roi in 001 002 003 004 005 006 007 ; do
-	${MAGICKDIR}/convert -size 2600x3365 xc:white \
+	${magick_dir}/convert -size 2600x3365 xc:white \
 		-gravity center \( page_${roi}.png -resize 2000x \) -composite \
 		-gravity North -pointsize 48 -annotate +0+100 \
 		"Connectivity map for ROI ${roi}" \
@@ -88,6 +88,6 @@ for roi in 001 002 003 004 005 006 007 ; do
 		page_${roi}.png
 done
 
-${MAGICKDIR}/convert page_cor.png page_cort1.png page_0*.png cerconn.pdf
+${magick_dir}/convert page_cor.png page_cort1.png page_0*.png cerconn.pdf
 
 rm *.png
